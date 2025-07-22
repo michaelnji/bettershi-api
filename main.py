@@ -1,6 +1,10 @@
-def main():
-	print('Hello from bettershi-api!')
+from fastapi import FastAPI
 
 
-if __name__ == '__main__':
-	main()
+app = FastAPI()
+
+
+# for server health
+@app.get('/status')
+def get_status() -> str:
+	return 'App is running well. Exchange rates provided by Fapshi (https://fapshi.com)'
