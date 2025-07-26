@@ -12,8 +12,8 @@ class User(Base):
 	password = Column(String)
 	created_on = Column(DateTime)
 
-	# apikey = relationship('Apikey', back_populates='users')
-	# fapshiapikey = relationship('FapshiApikey', back_populates='users')
+	api_keys = relationship('Apikey', back_populates='users')
+	fapshi_api_keys = relationship('FapshiApikey', back_populates='users')
 
 
 class FapshiApikey(Base):
@@ -22,8 +22,8 @@ class FapshiApikey(Base):
 	id = Column(Uuid, primary_key=True, index=True)
 	key_value = Column(String, index=True)
 	created_on = Column(DateTime)
-	# owner = Column(Uuid, ForeignKey('users.id'))
-	# user = relationship('User', back_populates='fapshi_api_keys')
+	owner = Column(Uuid, ForeignKey('users.id'))
+	users = relationship('User', back_populates='fapshi_api_keys')
 
 
 class Apikey(Base):
@@ -32,5 +32,5 @@ class Apikey(Base):
 	id = Column(Uuid, primary_key=True, index=True)
 	key_value = Column(String, index=True)
 	created_on = Column(DateTime)
-	# owner = Column(Uuid, ForeignKey('users.id'))
-	# user = relationship('User', back_populates='api_keys')
+	owner = Column(Uuid, ForeignKey('users.id'))
+	users = relationship('User', back_populates='api_keys')

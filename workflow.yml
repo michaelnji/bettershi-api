@@ -1,0 +1,106 @@
+version: "1.0"
+name: FastAPI
+config:
+  http: {}
+tests:
+  default:
+    name: Default
+    steps:
+      - id: register_user_auth_register_post
+        name: Register User
+        http:
+          url: /auth/register
+          method: POST
+          headers:
+            Content-Type: application/json
+            accept: application/json
+          json:
+            name: consectetur id culpa in proident
+            email: ea
+            password: ipsum nostrud sed dolore tempor
+          check:
+            status: 200
+            schema:
+              $ref: "#/components/schemas/responseModel"
+      - id: get_status_status_get
+        name: Get Status
+        http:
+          url: /status
+          method: GET
+          check:
+            status: 200
+            schema:
+              $ref: "#/components/schemas/responseModel"
+components:
+  schemas:
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: "#/components/schemas/ValidationError"
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    User:
+      properties:
+        name:
+          type: string
+          title: Name
+        email:
+          type: string
+          title: Email
+        password:
+          type: string
+          title: Password
+      type: object
+      required:
+        - name
+        - email
+        - password
+      title: User
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+              - type: string
+              - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+        - loc
+        - msg
+        - type
+      title: ValidationError
+    responseModel:
+      properties:
+        status:
+          type: integer
+          title: Status
+        message:
+          anyOf:
+            - type: string
+            - type: "null"
+          title: Message
+        err:
+          anyOf:
+            - type: string
+            - type: "null"
+          title: Err
+        data:
+          anyOf:
+            - {}
+            - type: "null"
+          title: Data
+      type: object
+      required:
+        - status
+      title: responseModel

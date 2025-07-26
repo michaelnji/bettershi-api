@@ -1,5 +1,4 @@
 from pydantic import BaseModel
-from datetime import datetime
 
 
 class User(BaseModel):
@@ -13,7 +12,6 @@ class User(BaseModel):
 
 
 class Apikey(BaseModel):
-	id: str
 	key_value: str
 	# created_on: datetime
 	owner: str
@@ -23,7 +21,6 @@ class Apikey(BaseModel):
 
 
 class FapshiApikey(BaseModel):
-	id: str
 	key_value: str
 	# created_on: datetime
 	owner: str
