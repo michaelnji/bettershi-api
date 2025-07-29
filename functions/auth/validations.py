@@ -1,3 +1,9 @@
+import datetime
+
+from whenever import Instant
+from functions.auth.signer import decodeJWT
+
+
 def validateEmail(email: str) -> bool:
 	import re
 
@@ -17,3 +23,16 @@ def validatePassword(password: str) -> bool:
 	if not any(char.islower() for char in password):
 		return False
 	return bool(any(char in '!@#$%^&*()-_+=?' for char in password))
+
+
+def isTokenExpired(token: str) -> bool:
+	decoded_token = decodeJWT(token)
+	if not decoded_token:
+		return False
+
+	now = datetime.datetime.fromisoformat(Instant.now().format_common_iso())
+	expires = datetime.datetime.fromisoformat(decoded_token['expires'])
+	print(f'{now} {expires}')
+	if now >= expires:
+		return True
+	return False
